@@ -1,9 +1,9 @@
 <html>
 <head>
-<link rel="stylesheet" href="css/style.css"> <!-- Main theme -->
-<link rel="stylesheet" href="css/medium-editor.min.css"> <!-- Core -->
-<link rel="stylesheet" href="css/themes/bootstrap.min.css"> <!-- or any other theme -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<link rel="stylesheet" href="css/style.css"> <!-- Main theme -->
+	<link rel="stylesheet" href="css/medium-editor.min.css"> <!-- Core -->
+	<link rel="stylesheet" href="css/themes/bootstrap.min.css"> <!-- or any other theme -->
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 </head>
 <body>
 <div id="container">
@@ -39,47 +39,45 @@ $("#btn").click(snd)
 
 function snd() {
 
+// Due to Medium-Editor problems with <p> tags, need this replacement to work properly
 var txt = $("div.editable").html().replaceAll("</p><p>","\n").replaceAll("<p>","").replaceAll("</p>","");
 
+// Hidden image is just a link to an image with zero-width text. 
+// Second &#8203; is needed to avoid doubling first character if it presents in link.
+// Nevermind, this just works.
 if ($("#hid_img").val()) {
 	txt = "<a href=\""+encodeURIComponent($("#hid_img").val())+"\">"+encodeURIComponent("&#8203;")+"</a>" + encodeURIComponent("&#8203;") + txt;
-	
 }
 
 var params = "chat_id="+$("#txt").val()+"&text="+txt+"&parse_mode=HTML";
 
+// Disable notifications
 if ($("#notif").prop('checked') ) {
 	params += "&disable_notification=true";
 }
 
+// Disable webpage preview (disables hidden image as well)
 if ($("#preview").prop('checked') ) {
 	params += "&disable_web_page_preview=true";
 }
 
-console.log(txt);
-
+// http queries in JS are MAGIC for me, so I'm not responsible for this piece of code
 var http = new XMLHttpRequest();
 var url = "https://api.telegram.org/bot"+$("#token").val()+"/sendMessage";
 http.open("POST", url, true);
 
-//Send the proper header information along with the request
 http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-http.onreadystatechange = function() {//Call a function when the state changes.
-    if(http.readyState == 4 && http.status == 200) {
-       // alert(http.responseText);
-		//alert($("div.editable").html().replaceAll("</p> <p>","\n").replaceAll("</p>","").replaceAll("<p>",""))
-    }
+http.onreadystatechange = function() {
+    if(http.readyState == 4 && http.status == 200) {    }
 }
 http.send(params);
 
 }
 
-
+// Quick'n'Dirty global replacement
 String.prototype.replaceAll = function(search, replace)
 {
-    //if replace is not sent, return original string otherwise it will
-    //replace search string with 'undefined'.
     if (replace === undefined) {
         return this.toString();
     }
