@@ -1,0 +1,91 @@
+<html>
+<head>
+<link rel="stylesheet" href="css/style.css"> <!-- Main theme -->
+<link rel="stylesheet" href="css/medium-editor.min.css"> <!-- Core -->
+<link rel="stylesheet" href="css/themes/bootstrap.min.css"> <!-- or any other theme -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+</head>
+<body>
+<div id="container">
+	<h2>Telegram poster</h2>
+	<div class="editable"></div>
+	Bot token: <input type="text" id="token" name="token" value="" size="56"><br />
+	Channel name or id: <input type="text" id="txt" name="chat_id" value=""><br />
+	Hidden image (leave blank to disable) <input type="text" id="hid_img" value=""><br />
+	<input type="checkbox" checked="checked" id="notif"/> Disable notifications <br />
+	<input type="checkbox" id="preview"/> Disable webpage preview <br />
+	<input value="Send post" id="btn" type="button">
+</div>
+<script src="js/medium-editor.min.js"></script>
+<script>
+var editor = new MediumEditor('.editable', {
+	placeholder: {
+        text: 'Type your text',
+        hideOnClick: true
+    },
+	toolbar: {
+        buttons: [
+            'bold',
+            'italic',
+			'anchor',
+        ]
+    },
+    activeButtonClass: 'medium-editor-button-active',
+	disableReturn: false,
+    spellcheck: false,
+});
+
+$("#btn").click(snd)
+
+function snd() {
+
+var txt = $("div.editable").html().replaceAll("</p><p>","\n").replaceAll("<p>","").replaceAll("</p>","");
+
+if ($("#hid_img").val()) {
+	txt = "<a href=\""+encodeURIComponent($("#hid_img").val())+"\">"+encodeURIComponent("&#8203;")+"</a>" + encodeURIComponent("&#8203;") + txt;
+	
+}
+
+var params = "chat_id="+$("#txt").val()+"&text="+txt+"&parse_mode=HTML";
+
+if ($("#notif").prop('checked') ) {
+	params += "&disable_notification=true";
+}
+
+if ($("#preview").prop('checked') ) {
+	params += "&disable_web_page_preview=true";
+}
+
+console.log(txt);
+
+var http = new XMLHttpRequest();
+var url = "https://api.telegram.org/bot"+$("#token").val()+"/sendMessage";
+http.open("POST", url, true);
+
+//Send the proper header information along with the request
+http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+http.onreadystatechange = function() {//Call a function when the state changes.
+    if(http.readyState == 4 && http.status == 200) {
+       // alert(http.responseText);
+		//alert($("div.editable").html().replaceAll("</p> <p>","\n").replaceAll("</p>","").replaceAll("<p>",""))
+    }
+}
+http.send(params);
+
+}
+
+
+String.prototype.replaceAll = function(search, replace)
+{
+    //if replace is not sent, return original string otherwise it will
+    //replace search string with 'undefined'.
+    if (replace === undefined) {
+        return this.toString();
+    }
+
+    return this.replace(new RegExp(search, 'g'), replace);
+};
+</script>
+</body>
+</html>
