@@ -45,7 +45,7 @@ $("#btn").click(snd)
 function snd() {
 
 // Due to Medium-Editor problems with <p> tags, need this replacement to work properly
-var txt = $("div.editable").html().replaceAll("</p><p>","\n").replaceAll("<p>","").replaceAll("</p>","").replaceAll("<br>","\n");
+var txt = $("div.editable").html().replaceAll("</p><p>","\n").replaceAll("<p>","").replaceAll("</p>","").replaceAll("<br>","\n").replaceAll("&nbsp;"," ");
 
 // Hidden image is just a link to an image with zero-width text. 
 // Second &#8203; is needed to avoid doubling first character if it presents in link.
