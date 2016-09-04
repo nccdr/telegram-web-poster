@@ -5,7 +5,7 @@
 body {
     font-family: Helvetica, Arial, sans-serif;
     font-size: 22px;
-    line-height: 30px;
+    line-height: 28px;
 }
 
 .top-bar {
@@ -65,11 +65,13 @@ a:hover {
 
 pre {
     font-family: 'Menlo', monospace;
-    font-size: 15px;
+    font-size: 20px;
     background-color: #f0f0f0;
-    padding: 15px;
+    padding: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 0px;
     color: #666;
 }
 
