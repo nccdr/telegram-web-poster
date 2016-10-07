@@ -86,11 +86,6 @@ blockquote {
     color: #555;
 }
 
-#container {
-    width: 960px;
-    margin: 30px auto;
-}
-
 .editable,
 .secondEditable
  {
@@ -115,4 +110,20 @@ blockquote {
     width: 30%;
     margin: 10px 1%;
 }
-
+.text-center {
+    text-align: center;
+}
+.btn {
+    width:50%;
+}
+.btn-group {
+    width:100%;
+}
+pre {
+    border: 0;
+    padding: 2px 4px;
+    font-size: 90%;
+    color: #c7254e;
+    background-color: #f9f2f4;
+    border-radius: 4px;
+}
