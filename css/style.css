@@ -93,8 +93,9 @@ blockquote {
  {
     outline: none;
     margin: 0 0 20px 0;
-    padding: 0 0 20px 0;
-    border-bottom: 1px solid #dbdbdb;
+    background-color: #FFF;
+    padding: 0px 5px 0px 5px;
+    border: 1px solid #424141;
 }
 
 #columns {
