@@ -19,8 +19,8 @@
 		<h2 class="text-center">Telegram poster</h2>
 		<div class="input-group">
 		  	<span class="input-group-addon">Bot token </span>
-		  	<input type="text" class="form-control" placeholder="123456789:ARGIHeFeDrglWuS_e5hGQVWmS2Y8kvcBlYw" id="token">
-		  	<span class="input-group-addon"><input id="rememberToken" type="checkbox"> Remember</span>
+			<input type="text" class="form-control" placeholder="123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11" id="token">
+			<span class="input-group-addon"><input id="rememberToken" type="checkbox"> Remember</span>
 		</div><br>
 		<div class="editable"></div>
 		<label><input type="checkbox" id="editMessage"> Edit existing message</label>
@@ -28,11 +28,16 @@
 		  	<span class="input-group-addon">Message ID</span>
 		 	<input type="text" class="form-control" disabled placeholder="12321513" id="message_id">
 		</div><br>
+
 		<label>Channel name or ID</label>
-		<input type="text" class="form-control" placeholder="@channel or 12354678" id="chat_id"><br>
+		<div class="input-group">
+			<input type="text" class="form-control" placeholder="@channel or 1234567" id="chat_id">
+			<span class="input-group-addon"><input id="rememberID" type="checkbox"> Remember</span>
+		</div><br>
+
 		<label><input type="checkbox" id="hiddenImage"> Add hidden image (link preview)</label>
 		<input type="text" disabled class="form-control" id="linkToImage" placeholder="http://example.com/preview.jpg" size="80"><br>
-		
+
 		<label><input type="checkbox" id="UrlButton"> Add URL Button</label>
 		<div class="row">
 			<div class="col-lg-4">
@@ -78,8 +83,13 @@ var editor = new MediumEditor('.editable', {
 });
 
 if(localStorage.token){
-	$("#rememberToken").prop('checked', true);
-	$("#token").val(localStorage.token);
+		$("#rememberToken").prop('checked', true);
+		$("#token").val(localStorage.token);
+}
+
+if(localStorage.id) {
+		$("#rememberID").prop('checked', true);
+		$("#chat_id").val(localStorage.id);
 }
 
 $("#clearText").click(function() {
@@ -124,8 +134,14 @@ $("#sendMessage").click(function(){
 
 	if($("#rememberToken").prop('checked')){
 		localStorage.token = $("#token").val();
-	}else{
-		localStorage.removeItem('token');
+	} else {
+		localStorage.token = "";
+	}
+
+	if($("#rememberID").prop('checked')){
+		localStorage.id = $("#chat_id").val();
+	} else {
+		localStorage.id = "";
 	}
 
 	$("#response").css('display', 'block');
