@@ -48,7 +48,7 @@
 			</div>
 		</div><br>
 		
-		<label><input type="checkbox" checked="true" id="diableNotifications"> Disable notifications</label><br>
+		<label><input type="checkbox" checked="true" id="disableNotifications"> Disable notifications</label><br>
 		<label><input type="checkbox" id="disablePreview"> Disable webpage preview (removes hidden image if any)</label><br><br>
 		<div class="btn-group">
 		  	<button class="btn btn-success" id="sendMessage">Send post</button>
@@ -125,8 +125,8 @@ $("#sendMessage").click(function(){
 			.replace(/<br>/g, '\n')
 			.replace(/&nbsp;/g, ' ');
 	data.parse_mode = 'HTML';
-	data.disable_notification = $("#diableNotifications").prop('checked');
-	data.disable_web_page_preview = $("#diablePreview").prop('checked');
+	data.disable_notification = $("#disableNotifications").prop('checked');
+	data.disable_web_page_preview = $("#disablePreview").prop('checked');
 	data.reply_markup = markup;
 
 	if($("#hiddenImage").prop('checked'))
